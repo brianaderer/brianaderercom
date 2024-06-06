@@ -24,7 +24,6 @@
 }
 
 body {
-  font-family: 'Consolas', monospace;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
           to bottom,
@@ -32,6 +31,7 @@ body {
           rgb(var(--background-end-rgb))
   )
   rgb(var(--background-start-rgb));
+  font-family: 'Consolas', monospace; /* Apply Consolas font globally */
 }
 
 @layer utilities {

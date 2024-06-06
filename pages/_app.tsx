@@ -4,9 +4,9 @@ import {AppProps} from "@/interfaces";
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
     return (
-        <div className="m-10 pl-8">
-            <Component {...pageProps} />
-        </div>
+            <div className="p-8 pt-20 w-full flex flex-col items-center justify-center overflow-x-hidden relative">
+                <Component {...pageProps} />
+            </div>
     );
 }
 

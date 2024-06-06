@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import createApolloClient from "../lib/apolloClient";
-import { useEffect, FC } from "react";
+import {useEffect, FC, useState} from "react";
 import { TypeOut, Badge } from '../components';
 import {HomeProps, Category, StringArray, Headline} from '@/interfaces';
 
@@ -64,6 +64,8 @@ export async function getStaticProps() {
 }
 
 const Home: FC<HomeProps> = ({ contacts, categories, technologies, headlines }) => {
+    const [badgeVisible, setBadgeVisible] = useState(false);
+
     useEffect(() => {
         console.log(headlines);
     }, [headlines]);
@@ -110,13 +112,19 @@ const Home: FC<HomeProps> = ({ contacts, categories, technologies, headlines }) 
             </div>
         );
     }
+    const finishedCallback = ()=> {
+        console.log('finished');
+    }
 
+    const firstLineCallback = () => {
+        console.log('first line complete');
+    }
     return (
-        <div>
-            <TypeOut strings={headlineStrings} />
-            <div>
+        <div className={`w-1/2`}>
+            <TypeOut finishedCallback={finishedCallback} firstLineCallback={firstLineCallback} strings={headlineStrings} />
+            <div className={`absolute top-10 right-10`}>
                 {contacts?.map((contact, index) => {
-                    return <Badge key={index} contact={contact} />
+                    return <Badge key={index} contact={contact} visible={badgeVisible} />
                 })}
             </div>
             <div className={`opacity-0 transition-all`}>

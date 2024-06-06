@@ -1,10 +1,16 @@
-import {StringArray} from "@/interfaces";
-import {FC, useEffect, useState, useCallback} from 'react';
-import {Cursor} from "@/components";
+import { StringArray } from "@/interfaces";
+import { FC, useEffect, useState, useCallback, useRef } from "react";
+import { Cursor } from "@/components";
 
-const TypeOut: FC<{ strings: StringArray }> = ({strings}) => {
-const [stringContent, setStringContent] = useState<Array<string>>([]);
-const [forceCursorVisible, setForceCursorVisible] = useState(true);
+const TypeOut: FC<{ strings: StringArray; firstLineCallback: () => void; finishedCallback: () => void }> = ({
+                                                                                                                strings,
+                                                                                                                firstLineCallback,
+                                                                                                                finishedCallback,
+                                                                                                            }) => {
+    const [stringContent, setStringContent] = useState<string>("");
+    const [forceCursorVisible, setForceCursorVisible] = useState(true);
+    const firstLineSent = useRef(false);
+    const processStarted = useRef(false);
 
     const handleKeystroke = useCallback(() => {
         setForceCursorVisible(true);
@@ -14,44 +20,57 @@ const [forceCursorVisible, setForceCursorVisible] = useState(true);
     }, []);
 
     useEffect(() => {
+        if (processStarted.current) return; // Prevent re-running the typing process
+
+        processStarted.current = true;
         let currentIndex = 0;
         let currentStringIndex = 0;
-        let currentStringContent: string[] = [];
+        let currentStringContent = "";
 
         const typeCharacter = () => {
             if (currentStringIndex < strings.strings.length) {
                 const currentString = strings.strings[currentStringIndex];
                 if (currentIndex < currentString.length) {
-                    currentStringContent[currentStringIndex] = (currentStringContent[currentStringIndex] || "") + currentString[currentIndex];
-                    setStringContent([...currentStringContent]);
+                    currentStringContent += currentString[currentIndex];
+                    setStringContent(currentStringContent);
                     handleKeystroke();
-                    const delay = currentString[currentIndex] === '.' || currentString[currentIndex] === '!' || currentString[currentIndex] === '?' ? 1000 : currentString[currentIndex] === ',' ? 250 : 20; // 1 second delay for periods, 0.5 second for commas, 0.02 second for others
-// 0.5 second delay for periods, 0.1 second for others
+                    const delay =
+                        currentString[currentIndex] === "." || currentString[currentIndex] === "!" || currentString[currentIndex] === "?"
+                            ? 1000
+                            : currentString[currentIndex] === ","
+                                ? 250
+                                : 20;
                     currentIndex++;
                     setTimeout(typeCharacter, delay);
                 } else {
                     currentStringIndex++;
                     currentIndex = 0;
                     if (currentStringIndex < strings.strings.length) {
-                        currentStringContent[currentStringIndex] = ""; // Initialize the next line
+                        currentStringContent += "\n"; // Add a line break for the next string
                     }
+
+                    // Check and call firstLineCallback here
+                    if (currentStringIndex === 1 && !firstLineSent.current) {
+                        firstLineSent.current = true;
+                        firstLineCallback();
+                    }
+
                     setTimeout(typeCharacter, 2000); // Delay before starting the next string
                 }
+            } else {
+                finishedCallback(); // Call finishedCallback when typing is done
             }
         };
 
         typeCharacter();
-    }, [strings.strings, handleKeystroke]);
+    }, [strings.strings, handleKeystroke, finishedCallback, firstLineCallback]);
 
     return (
-        <div className="flex flex-col">
-            {stringContent.map((str, index) => (
-                <div className="flex items-center" key={index}>
-                    <p className="inline m-0 tracking-tight">{str}</p>
-                    {index === stringContent.length - 1 && <Cursor forceCursorVisible={forceCursorVisible} className="inline-block align-middle"/>}
-                </div>
-            ))}
+        <div className="relative">
+            <pre className="inline m-0 whitespace-pre-wrap tracking-tight">{stringContent}</pre>
+            <Cursor forceCursorVisible={forceCursorVisible} className="inline-block align-middle absolute" />
         </div>
-    )
-}
+    );
+};
+
 export default TypeOut;
