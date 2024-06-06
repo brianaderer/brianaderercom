@@ -1,43 +1,8 @@
 import { gql } from "@apollo/client";
 import createApolloClient from "../lib/apolloClient";
 import { useEffect, FC } from "react";
-import { Cursor } from '../components';
-
-interface Contact {
-    node: {
-        website: string;
-        phoneNumber: string;
-        name: string;
-        id: string;
-        email: string;
-    };
-}
-
-interface Category {
-    rght: number;
-    treeId: number;
-    name: string;
-    level: number;
-    lft: number;
-    id: string;
-    parent: Category | null;
-    children: Category[];
-}
-
-interface Technology {
-    id: string;
-    name: string;
-    category: {
-        name: string;
-        id: string;
-    };
-}
-
-interface HomeProps {
-    contacts: Contact[];
-    categories: Category[];
-    technologies: Technology[];
-}
+import { TypeOut, Badge } from '../components';
+import {HomeProps, Category, StringArray, Headline} from '@/interfaces';
 
 export async function getStaticProps() {
     const client = createApolloClient();
@@ -62,6 +27,11 @@ export async function getStaticProps() {
                   name
                   id
                 }
+              }
+            listHeadline {
+                content
+                id
+                order
               }
             listCategory {
                 rght
@@ -88,18 +58,19 @@ export async function getStaticProps() {
             contacts: data.listContact.edges,
             categories: data.listCategory,
             technologies: data.listTechnology,
+            headlines: data.listHeadline,
         },
     };
 }
 
-const Home: FC<HomeProps> = ({ contacts, categories, technologies }) => {
-    contacts.map(contact => {
-        console.log(contact.node);
-    });
-
+const Home: FC<HomeProps> = ({ contacts, categories, technologies, headlines }) => {
     useEffect(() => {
-        console.log(technologies);
-    }, [technologies]);
+        console.log(headlines);
+    }, [headlines]);
+
+    const headlineStrings: StringArray = {
+        strings: headlines.map((headline: Headline) => headline.content)
+    };
 
     function flatListToHierarchical(flatList: Category[]): Category[] {
         const idMap: { [key: string]: Category } = {};
@@ -142,21 +113,15 @@ const Home: FC<HomeProps> = ({ contacts, categories, technologies }) => {
 
     return (
         <div>
-            <Cursor />
+            <TypeOut strings={headlineStrings} />
             <div>
-                {contacts?.map(contact => {
-                    const person = contact.node;
-                    return (
-                        <div key={person.id}>
-                            <p>{person.name}</p>
-                            <p>{person.phoneNumber}</p>
-                            <p>{person.email}</p>
-                            <p>{person.website}</p>
-                        </div>
-                    )
+                {contacts?.map((contact, index) => {
+                    return <Badge key={index} contact={contact} />
                 })}
             </div>
-            {flatListToHierarchical(categories).map(node => printHierarchicalList(node))}
+            <div className={`opacity-0 transition-all`}>
+                {flatListToHierarchical(categories).map(node => printHierarchicalList(node))}
+            </div>
         </div>
     );
 }

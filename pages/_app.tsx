@@ -1,10 +1,6 @@
 import React, { FC } from 'react';
 import "../styles/globals.css";
-
-interface AppProps {
-    Component: React.ComponentType<any>;
-    pageProps: any;
-}
+import {AppProps} from "@/interfaces";
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
     return (
