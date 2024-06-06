@@ -1,6 +1,43 @@
 import { gql } from "@apollo/client";
 import createApolloClient from "../lib/apolloClient";
-import {useEffect} from "react";
+import { useEffect, FC } from "react";
+import { Cursor } from '../components';
+
+interface Contact {
+    node: {
+        website: string;
+        phoneNumber: string;
+        name: string;
+        id: string;
+        email: string;
+    };
+}
+
+interface Category {
+    rght: number;
+    treeId: number;
+    name: string;
+    level: number;
+    lft: number;
+    id: string;
+    parent: Category | null;
+    children: Category[];
+}
+
+interface Technology {
+    id: string;
+    name: string;
+    category: {
+        name: string;
+        id: string;
+    };
+}
+
+interface HomeProps {
+    contacts: Contact[];
+    categories: Category[];
+    technologies: Technology[];
+}
 
 export async function getStaticProps() {
     const client = createApolloClient();
@@ -55,20 +92,22 @@ export async function getStaticProps() {
     };
 }
 
-export default function Home({ contacts, categories, technologies }) {
+const Home: FC<HomeProps> = ({ contacts, categories, technologies }) => {
     contacts.map(contact => {
         console.log(contact.node);
-    })
+    });
+
     useEffect(() => {
         console.log(technologies);
     }, [technologies]);
-    function flatListToHierarchical(flatList) {
-        const idMap = {};
+
+    function flatListToHierarchical(flatList: Category[]): Category[] {
+        const idMap: { [key: string]: Category } = {};
         flatList.forEach(node => {
             idMap[node.id] = { ...node, children: [] };
         });
 
-        const rootNodes = [];
+        const rootNodes: Category[] = [];
         flatList.forEach(node => {
             if (node.parent === null) {
                 rootNodes.push(idMap[node.id]);
@@ -83,21 +122,19 @@ export default function Home({ contacts, categories, technologies }) {
         return rootNodes;
     }
 
-    function printHierarchicalList(node, indent = 0) {
+    function printHierarchicalList(node: Category, indent = 0): JSX.Element {
         return (
             <div key={node.id} style={{ marginLeft: indent * 20 }}>
                 {node.name}
                 {node.children.map(child => printHierarchicalList(child, indent + 1))}
                 <div>
-                    {
-                        technologies.map((technology, index) => {
-                            if(technology.category.id === node.id) {
-                                return <div style={{ marginLeft: 20 }} key={index}>{technology.name}</div>
-                            } else {
-                                return null;
-                            }
-                        })
-                    }
+                    {technologies.map((technology, index) => {
+                        if (technology.category.id === node.id) {
+                            return <div style={{ marginLeft: 20 }} key={index}>{technology.name}</div>
+                        } else {
+                            return null;
+                        }
+                    })}
                 </div>
             </div>
         );
@@ -105,20 +142,23 @@ export default function Home({ contacts, categories, technologies }) {
 
     return (
         <div>
+            <Cursor />
             <div>
-            {contacts?.map(contact => {
-                const person = contact.node;
-                return (
-                    <div key={person.id}>
-                        <p>{person.name}</p>
-                        <p>{person.phoneNumber}</p>
-                        <p>{person.email}</p>
-                        <p>{person.website}</p>
-                    </div>
-                )
-            })}
+                {contacts?.map(contact => {
+                    const person = contact.node;
+                    return (
+                        <div key={person.id}>
+                            <p>{person.name}</p>
+                            <p>{person.phoneNumber}</p>
+                            <p>{person.email}</p>
+                            <p>{person.website}</p>
+                        </div>
+                    )
+                })}
             </div>
             {flatListToHierarchical(categories).map(node => printHierarchicalList(node))}
         </div>
     );
 }
+
+export default Home;
