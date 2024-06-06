@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b3ed194-ba40-4fee-95f9-c43f41625b26" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/components/ContactList/ContactList.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/ContactList/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/apolloClient.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/app/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/apolloClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/apolloClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +36,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/ennig/brianaderercom_next",
+    "last_opened_file_path": "C:/Users/ennig/Flywheel/hmb/app-node",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -63,6 +60,11 @@
       <option name="presentableId" value="Default" />
       <updated>1715359682427</updated>
       <workItem from="1715359685789" duration="1004000" />
+      <workItem from="1715906314669" duration="4615000" />
+      <workItem from="1716332837562" duration="1125000" />
+      <workItem from="1716503960684" duration="1457000" />
+      <workItem from="1716561151596" duration="2921000" />
+      <workItem from="1717461160574" duration="4871000" />
     </task>
     <servers />
   </component>
