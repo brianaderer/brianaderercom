@@ -16,6 +16,23 @@
   }
 }
 
+
+/*.clip:before {*/
+/*  content: '';*/
+/*  height: 100%;*/
+/*  width: 100%;*/
+/*  background: #00c000;*/
+/*  display: block;*/
+/*  position: absolute;*/
+/*  top: 1px;*/
+/*  left: 1px;*/
+/*  z-index: -1;*/
+/*}*/
+/*.clip, .clip:before {*/
+/*  -webkit-clip-path: polygon(100% 0, 100% 100%, 8% 100%, 0 88%, 0 0);*/
+/*  clip-path: polygon(100% 0, 100% 100%, 8% 100%, 0 88%, 0 0);*/
+/*}*/
+
 @font-face {
   font-family: 'Consolas';
   src: url('/fonts/consola.ttf') format('truetype');

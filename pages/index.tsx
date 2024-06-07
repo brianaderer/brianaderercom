@@ -65,6 +65,7 @@ export async function getStaticProps() {
 
 const Home: FC<HomeProps> = ({ contacts, categories, technologies, headlines }) => {
     const [badgeVisible, setBadgeVisible] = useState(false);
+    const [siteVisible, setSiteVisible] = useState(false);
 
     useEffect(() => {
         console.log(headlines);
@@ -113,21 +114,22 @@ const Home: FC<HomeProps> = ({ contacts, categories, technologies, headlines }) 
         );
     }
     const finishedCallback = ()=> {
-        console.log('finished');
+        setSiteVisible(true);
     }
 
     const firstLineCallback = () => {
-        console.log('first line complete');
+        setBadgeVisible(true);
     }
     return (
-        <div className={`w-1/2`}>
+        <div className={`p-8 pt-20 w-1/2 overflow-hidden min-h-[100vh]`}>
             <TypeOut finishedCallback={finishedCallback} firstLineCallback={firstLineCallback} strings={headlineStrings} />
-            <div className={`absolute top-10 right-10`}>
+            <div className={`absolute top-2 right-2`}>
                 {contacts?.map((contact, index) => {
                     return <Badge key={index} contact={contact} visible={badgeVisible} />
                 })}
             </div>
-            <div className={`opacity-0 transition-all`}>
+            <div className={`${siteVisible ? `opacity-1 h-auto` : `opacity-0 h-0` } mt-10 transition-all`}>
+                <h3 className={`mb-6`}>Skillz</h3>
                 {flatListToHierarchical(categories).map(node => printHierarchicalList(node))}
             </div>
         </div>

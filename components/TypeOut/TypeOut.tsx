@@ -46,7 +46,7 @@ const TypeOut: FC<{ strings: StringArray; firstLineCallback: () => void; finishe
                     currentStringIndex++;
                     currentIndex = 0;
                     if (currentStringIndex < strings.strings.length) {
-                        currentStringContent += "\n"; // Add a line break for the next string
+                        currentStringContent += "\n\r\n\r"; // Add a line break for the next string
                     }
 
                     // Check and call firstLineCallback here
@@ -67,7 +67,7 @@ const TypeOut: FC<{ strings: StringArray; firstLineCallback: () => void; finishe
 
     return (
         <div className="relative">
-            <pre className="inline m-0 whitespace-pre-wrap tracking-tight">{stringContent}</pre>
+            <p className="inline m-0 whitespace-pre-wrap tracking-tight pt-8">{stringContent}</p>
             <Cursor forceCursorVisible={forceCursorVisible} className="inline-block align-middle absolute" />
         </div>
     );
