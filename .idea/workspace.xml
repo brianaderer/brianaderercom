@@ -5,17 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b3ed194-ba40-4fee-95f9-c43f41625b26" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/components/Deliverable/Deliverable.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Deliverable/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Job/Job.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Job/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Technology/Technology.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Technology/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/interfaces/Deliverable.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/interfaces/Job.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Project/Project.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Project/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/interfaces/Project.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Job/Job.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Job/Job.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interfaces/Category.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/Technology.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/interfaces/HomeProps.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/HomeProps.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/interfaces/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
@@ -93,7 +88,8 @@
       <workItem from="1717699816958" duration="25863000" />
       <workItem from="1719014621733" duration="1096000" />
       <workItem from="1719450866037" duration="2951000" />
-      <workItem from="1719454812737" duration="33293000" />
+      <workItem from="1719454812737" duration="36198000" />
+      <workItem from="1719699179527" duration="1680000" />
     </task>
     <servers />
   </component>

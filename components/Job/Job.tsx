@@ -4,9 +4,8 @@ import {Deliverable} from '@/components';
 
 const Job: FC<{ job: JobType, className?: string }> = props => {
     const {job, className = ''} = props;
-    console.log(job);
     return (
-        <div className={`mb-8 flex flex-col gap-4`}>
+        <div className={`mb-8 flex flex-col gap-4 ${className}`}>
             <h1>{job.name}</h1>
             <p>{job.title}</p>
             <p>{job.startDate}</p>

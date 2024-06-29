@@ -1,4 +1,4 @@
-import {Technology, Contact, Headline, MenuItem, Job} from "@/interfaces";
+import {Technology, Contact, Headline, MenuItem, Job, Project} from "@/interfaces";
 
 export interface HomeProps {
     contacts: Contact[];
@@ -6,4 +6,5 @@ export interface HomeProps {
     headlines: Headline[];
     menu: MenuItem[];
     jobs: Job[];
+    projects: Project[];
 }

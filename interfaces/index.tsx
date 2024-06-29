@@ -6,3 +6,4 @@ export type {HomeProps} from './HomeProps';
 export type {MenuItem} from './MenuItem';
 export type {StringArray} from './StringArray';
 export type {Job} from './Job';
+export type {Project} from './Project';

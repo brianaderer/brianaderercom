@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import createApolloClient from "../lib/apolloClient";
 import {useEffect, FC, useState, useRef} from "react";
-import { TypeOut, Badge, MenuLink, Job } from '@/components';
+import { TypeOut, Badge, MenuLink, Job, Project } from '@/components';
 import {HomeProps, Technology, StringArray, Headline} from '@/interfaces';
 
 export async function getStaticProps() {
@@ -9,6 +9,28 @@ export async function getStaticProps() {
     const { data } = await client.query({
         query: gql`
         query MyQuery {
+          listProjects {
+            description
+            featured
+            id
+            name
+            url
+            technologies {
+              description
+              id
+              level
+              lft
+              name
+              rght
+              treeId
+              parent {
+                id
+              }
+              children {
+                id
+              }
+            }
+          }
           listContact (primary: true) {
             edges {
               node {
@@ -86,11 +108,12 @@ export async function getStaticProps() {
             headlines: data.listHeadline,
             menu: data.listMenu,
             jobs: data.listJobs,
+            projects: data.listProjects,
         },
     };
 }
 
-const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs }) => {
+const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs, projects }) => {
     const [badgeVisible, setBadgeVisible] = useState(false);
     const [siteVisible, setSiteVisible] = useState(false);
     const [selectedSection, setSelectedSection] = useState('');
@@ -114,7 +137,7 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs }) 
         }
         
     }, [headlines, selectedSection, menu, headlinePrinted]);
-
+    console.log(projects);
     function flatListToHierarchical(flatList: Technology[]): Technology[] {
         const idMap: { [key: string]: Technology } = {};
         flatList.forEach(node => {
@@ -187,6 +210,12 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs }) 
                 className={`${siteVisible && selectedSection === 'cv' ? `opacity-1` : `opacity-0 h-0`} mt-10 transition-all`}>
                 {jobs.map((job, index) => {
                     return <Job key={index} job={job} />
+                })}
+            </div>
+            <div
+                className={`${siteVisible && selectedSection === 'projects' ? `opacity-1` : `opacity-0 h-0`} mt-10 transition-all flex flex-col gap-4`}>
+                {projects.map((project, index) => {
+                    return <Project key={index} project={project} />
                 })}
             </div>
         </div>
