@@ -1,9 +1,8 @@
 import { gql } from "@apollo/client";
 import createApolloClient from "../lib/apolloClient";
 import {useEffect, FC, useState, useRef} from "react";
-import { TypeOut, Badge, MenuLink } from '@/components';
-import {HomeProps, Category, StringArray, Headline} from '@/interfaces';
-import {Technology} from "@/interfaces/Category";
+import { TypeOut, Badge, MenuLink, Job } from '@/components';
+import {HomeProps, Technology, StringArray, Headline} from '@/interfaces';
 
 export async function getStaticProps() {
     const client = createApolloClient();
@@ -49,6 +48,33 @@ export async function getStaticProps() {
                 order
                 resource
               }
+               listJobs {
+                    description
+                    endDate
+                    deliverables {
+                      description
+                      id
+                      name
+                      technologies {
+                        description
+                        id
+                        level
+                        lft
+                        name
+                        rght
+                        treeId
+                        parent {
+                          id
+                        }
+                        children {
+                          id
+                        }
+                      }
+                    }
+                    name
+                    startDate
+                    title
+          }
         }
         `,
     });
@@ -59,11 +85,12 @@ export async function getStaticProps() {
             technologies: data.listTechnology,
             headlines: data.listHeadline,
             menu: data.listMenu,
+            jobs: data.listJobs,
         },
     };
 }
 
-const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu }) => {
+const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs }) => {
     const [badgeVisible, setBadgeVisible] = useState(false);
     const [siteVisible, setSiteVisible] = useState(false);
     const [selectedSection, setSelectedSection] = useState('');
@@ -71,10 +98,8 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu }) => {
     const startProcess = useRef(true);
     const [headlinePrinted, setHeadlinePrinted] = useState(false);
     const [menuVisible, setMenuVisible] = useState(false);
-
     useEffect(() => {
         if( !headlinePrinted ){
-            console.log('headlines triggered');
             typeOutStrings.current = headlines.map((headline: Headline) => headline.content)
             setHeadlinePrinted(true);
         } else {
@@ -138,7 +163,7 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu }) => {
         <div className={`p-8 pt-20 w-1/2 overflow-hidden min-h-[100vh]`}>
             <TypeOut setSiteVisible={setSiteVisible} startProcess={startProcess} finishedCallback={finishedCallback}
                      firstLineCallback={firstLineCallback} strings={typeOutStrings.current}/>
-            <div className={`absolute top-2 right-2 flex flex-col`}>
+            <div className={`fixed top-2 right-2 flex flex-col`}>
                 {contacts?.map((contact, index) => {
                     return <Badge key={index} contact={contact} visible={badgeVisible}/>
                 })}
@@ -157,6 +182,12 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu }) => {
             <div
                 className={`${siteVisible && selectedSection === 'skillsAndTech' ? `opacity-1` : `opacity-0 h-0`} mt-10 transition-all`}>
                 {flatListToHierarchical(technologies).map(node => printHierarchicalList(node))}
+            </div>
+            <div
+                className={`${siteVisible && selectedSection === 'cv' ? `opacity-1` : `opacity-0 h-0`} mt-10 transition-all`}>
+                {jobs.map((job, index) => {
+                    return <Job key={index} job={job} />
+                })}
             </div>
         </div>
     );
