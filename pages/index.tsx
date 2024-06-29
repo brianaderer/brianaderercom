@@ -3,7 +3,7 @@ import createApolloClient from "../lib/apolloClient";
 import {useEffect, FC, useState, useRef} from "react";
 import { TypeOut, Badge, MenuLink } from '@/components';
 import {HomeProps, Category, StringArray, Headline} from '@/interfaces';
-import {start} from "node:repl";
+import {Technology} from "@/interfaces/Category";
 
 export async function getStaticProps() {
     const client = createApolloClient();
@@ -21,20 +21,12 @@ export async function getStaticProps() {
               }
             }
           }
-            listTechnology {
-                id
-                name
-                category {
-                  name
-                  id
-                }
-              }
             listHeadline {
                 content
                 id
                 order
               }
-            listCategory {
+            listTechnology {
                 rght
                 treeId
                 name
@@ -64,7 +56,6 @@ export async function getStaticProps() {
     return {
         props: {
             contacts: data.listContact.edges,
-            categories: data.listCategory,
             technologies: data.listTechnology,
             headlines: data.listHeadline,
             menu: data.listMenu,
@@ -72,7 +63,7 @@ export async function getStaticProps() {
     };
 }
 
-const Home: FC<HomeProps> = ({ contacts, categories, technologies, headlines, menu }) => {
+const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu }) => {
     const [badgeVisible, setBadgeVisible] = useState(false);
     const [siteVisible, setSiteVisible] = useState(false);
     const [selectedSection, setSelectedSection] = useState('');
@@ -99,13 +90,13 @@ const Home: FC<HomeProps> = ({ contacts, categories, technologies, headlines, me
         
     }, [headlines, selectedSection, menu, headlinePrinted]);
 
-    function flatListToHierarchical(flatList: Category[]): Category[] {
-        const idMap: { [key: string]: Category } = {};
+    function flatListToHierarchical(flatList: Technology[]): Technology[] {
+        const idMap: { [key: string]: Technology } = {};
         flatList.forEach(node => {
             idMap[node.id] = {...node, children: []};
         });
 
-        const rootNodes: Category[] = [];
+        const rootNodes: Technology[] = [];
         flatList.forEach(node => {
             if (node.parent === null) {
                 rootNodes.push(idMap[node.id]);
@@ -120,21 +111,11 @@ const Home: FC<HomeProps> = ({ contacts, categories, technologies, headlines, me
         return rootNodes;
     }
 
-    function printHierarchicalList(node: Category, indent = 0): JSX.Element {
+    function printHierarchicalList(node: Technology, indent = 0): JSX.Element {
         return (
             <div key={node.id} style={{marginLeft: indent * 20}}>
                 {node.name}
                 {node.children.map(child => printHierarchicalList(child, indent + 1))}
-                <div>
-                    {technologies.map((technology, index) => {
-                        if (technology.category.id === node.id) {
-                            return <div className={`ml-8 select-none`} key={index}><p
-                                className={'select-none'}>{technology.name}</p></div>
-                        } else {
-                            return null;
-                        }
-                    })}
-                </div>
             </div>
         );
     }
@@ -175,7 +156,7 @@ const Home: FC<HomeProps> = ({ contacts, categories, technologies, headlines, me
             </div>
             <div
                 className={`${siteVisible && selectedSection === 'skillsAndTech' ? `opacity-1` : `opacity-0 h-0`} mt-10 transition-all`}>
-                {flatListToHierarchical(categories).map(node => printHierarchicalList(node))}
+                {flatListToHierarchical(technologies).map(node => printHierarchicalList(node))}
             </div>
         </div>
     );

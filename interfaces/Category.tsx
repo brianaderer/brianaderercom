@@ -1,10 +1,10 @@
-export interface Category {
+export interface Technology {
     rght: number;
     treeId: number;
     name: string;
     level: number;
     lft: number;
     id: string;
-    parent: Category | null;
-    children: Category[];
+    parent: Technology | null;
+    children: Technology[];
 }
