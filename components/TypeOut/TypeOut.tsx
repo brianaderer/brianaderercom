@@ -2,15 +2,26 @@ import { StringArray } from "@/interfaces";
 import { FC, useEffect, useState, useCallback, useRef } from "react";
 import { Cursor } from "@/components";
 
-const TypeOut: FC<{ strings: StringArray; firstLineCallback: () => void; finishedCallback: () => void }> = ({
-                                                                                                                strings,
-                                                                                                                firstLineCallback,
-                                                                                                                finishedCallback,
-                                                                                                            }) => {
+const TypeOut: FC<{
+    strings: StringArray,
+    firstLineCallback: () => void,
+    finishedCallback: () => void,
+    startProcess: {current:
+        boolean
+    },
+    setSiteVisible: (value:boolean) => void,
+}> = ({
+        strings,
+        firstLineCallback,
+        finishedCallback,
+        startProcess,
+        setSiteVisible,
+    }) => {
     const [stringContent, setStringContent] = useState<string>("");
     const [forceCursorVisible, setForceCursorVisible] = useState(true);
     const firstLineSent = useRef(false);
-    const processStarted = useRef(false);
+    const [processRunning, setProcessRunning] = useState(false);
+    const [cursorActive, setCursorActive] = useState(false);
 
     const handleKeystroke = useCallback(() => {
         setForceCursorVisible(true);
@@ -20,16 +31,21 @@ const TypeOut: FC<{ strings: StringArray; firstLineCallback: () => void; finishe
     }, []);
 
     useEffect(() => {
-        if (processStarted.current) return; // Prevent re-running the typing process
+        console.log('start process: ', startProcess);
+        console.log('strings: ', strings);
 
-        processStarted.current = true;
+        if ( !startProcess.current || !strings.length || processRunning ) return; // Prevent re-running the typing process
+        setProcessRunning(true);
+        startProcess.current = false;
+        setSiteVisible(false);
+        setCursorActive(true);
         let currentIndex = 0;
         let currentStringIndex = 0;
         let currentStringContent = "";
 
         const typeCharacter = () => {
-            if (currentStringIndex < strings.strings.length) {
-                const currentString = strings.strings[currentStringIndex];
+            if (currentStringIndex < strings.length) {
+                const currentString = strings[currentStringIndex];
                 if (currentIndex < currentString.length) {
                     currentStringContent += currentString[currentIndex];
                     setStringContent(currentStringContent);
@@ -45,7 +61,7 @@ const TypeOut: FC<{ strings: StringArray; firstLineCallback: () => void; finishe
                 } else {
                     currentStringIndex++;
                     currentIndex = 0;
-                    if (currentStringIndex < strings.strings.length) {
+                    if (currentStringIndex < strings.length) {
                         currentStringContent += "\n\r\n\r"; // Add a line break for the next string
                     }
 
@@ -55,20 +71,26 @@ const TypeOut: FC<{ strings: StringArray; firstLineCallback: () => void; finishe
                         firstLineCallback();
                     }
 
-                    setTimeout(typeCharacter, 2000); // Delay before starting the next string
+                    setTimeout(typeCharacter, 1000); // Delay before starting the next string
                 }
             } else {
-                finishedCallback(); // Call finishedCallback when typing is done
+                setTimeout(function(){
+                    setTimeout(function(){
+                        setCursorActive(false);
+                    }, 1000);
+                    finishedCallback();// Call finishedCallback when typing is done
+                    setProcessRunning(false);
+                }, 500);
             }
         };
 
         typeCharacter();
-    }, [strings.strings, handleKeystroke, finishedCallback, firstLineCallback]);
+    }, [strings, handleKeystroke, finishedCallback, firstLineCallback, startProcess, processRunning, setSiteVisible]);
 
     return (
         <div className="relative">
-            <p className="inline m-0 whitespace-pre-wrap tracking-tight pt-8">{stringContent}</p>
-            <Cursor forceCursorVisible={forceCursorVisible} className="inline-block align-middle absolute" />
+            <p className="inline m-0 whitespace-pre-wrap tracking-tight pt-8 select-none">{stringContent}</p>
+            <Cursor forceCursorVisible={forceCursorVisible} active={cursorActive} className="inline-block align-middle absolute" />
         </div>
     );
 };

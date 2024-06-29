@@ -5,12 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b3ed194-ba40-4fee-95f9-c43f41625b26" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/components/MenuLink/MenuLink.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/MenuLink/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/interfaces/ChildrenProps.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/interfaces/MenuItem.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/Badge/Badge.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Badge/Badge.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Cursor/Cursor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Cursor/Cursor.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/TypeOut/TypeOut.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/TypeOut/TypeOut.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/HomeProps.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/HomeProps.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/StringArray.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/StringArray.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/globals.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,22 +38,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/ennig/brianaderercom_next/public/fonts",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Users\\ennig\\brianaderercom_next\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ennig/brianaderercom_next/public/fonts&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\ennig\\brianaderercom_next\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ennig\brianaderercom_next\public\fonts" />
@@ -81,7 +89,10 @@
       <workItem from="1717698031555" duration="253000" />
       <workItem from="1717698299304" duration="972000" />
       <workItem from="1717699454543" duration="6000" />
-      <workItem from="1717699816958" duration="18039000" />
+      <workItem from="1717699816958" duration="25863000" />
+      <workItem from="1719014621733" duration="1096000" />
+      <workItem from="1719450866037" duration="2951000" />
+      <workItem from="1719454812737" duration="27142000" />
     </task>
     <servers />
   </component>

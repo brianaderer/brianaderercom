@@ -1,6 +1,10 @@
 import { useEffect, useState, FC } from "react";
 
-const Cursor: FC<{ className: string, forceCursorVisible: boolean }> = ({ className, forceCursorVisible }) => {
+const Cursor: FC<{
+    className: string,
+    forceCursorVisible: boolean,
+    active: boolean,
+}> = ({ className, forceCursorVisible, active }) => {
     const [cursorVisible, setCursorVisible] = useState(false);
 
     useEffect(() => {
@@ -21,7 +25,7 @@ const Cursor: FC<{ className: string, forceCursorVisible: boolean }> = ({ classN
 
     return (
         <div
-            className={`inline-block h-6 w-2 bg-green-600 ml-2 ${cursorVisible ? `opacity-1` : `opacity-0`} ${className}`}
+            className={`inline-block h-6 w-2 bg-green-600 ml-2 ${cursorVisible && active ? `opacity-1` : `opacity-0`} ${className}`}
         ></div>
     );
 }

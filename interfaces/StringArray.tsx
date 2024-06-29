@@ -1,3 +1,1 @@
-export interface StringArray {
-    strings: string[],
-}
+export type StringArray = string[];
