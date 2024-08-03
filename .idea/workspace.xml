@@ -5,15 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b3ed194-ba40-4fee-95f9-c43f41625b26" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/components/Project/Project.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Project/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/interfaces/Project.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Job/Job.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Job/Job.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interfaces/HomeProps.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/HomeProps.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interfaces/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Badge/Badge.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Badge/Badge.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/MenuLink/MenuLink.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/MenuLink/MenuLink.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +34,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ennig/brianaderercom_next/public/fonts&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ennig/brianaderercom_next&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -89,7 +83,12 @@
       <workItem from="1719014621733" duration="1096000" />
       <workItem from="1719450866037" duration="2951000" />
       <workItem from="1719454812737" duration="36198000" />
-      <workItem from="1719699179527" duration="1680000" />
+      <workItem from="1719699179527" duration="2368000" />
+      <workItem from="1719751517294" duration="634000" />
+      <workItem from="1719755471733" duration="16000" />
+      <workItem from="1722092050029" duration="718000" />
+      <workItem from="1722690560983" duration="488000" />
+      <workItem from="1722693978577" duration="1202000" />
     </task>
     <servers />
   </component>
