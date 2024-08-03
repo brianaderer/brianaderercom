@@ -101,7 +101,7 @@ export async function getStaticProps() {
         }
         `,
     });
-    console.log('Data fetched successfully:', result.data);
+    console.log('Data fetched successfully:', data);
     return {
         props: {
             contacts: data.listContact.edges,
