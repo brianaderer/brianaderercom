@@ -39,6 +39,5 @@ jobs:
           script: |
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -rf /var/cache/nginx/*
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S systemctl reload nginx
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S systemctl restart gunicorn
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S systemctl restart nginx
 

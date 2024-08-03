@@ -110,6 +110,7 @@ export async function getStaticProps() {
             jobs: data.listJobs,
             projects: data.listProjects,
         },
+        revalidate: 60,
     };
 }
 
