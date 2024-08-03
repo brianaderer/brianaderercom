@@ -6,19 +6,78 @@ import {HomeProps, Technology, StringArray, Headline} from '@/interfaces';
 
 export async function getStaticProps() {
     const client = createApolloClient();
-    let data;
-
-    try {
-        const result = await client.query({
-            query: gql`
-            query MyQuery {
-                listProjects {
-                    description
-                    featured
+    const { data } = await client.query({
+        query: gql`
+        query MyQuery {
+          listProjects {
+            description
+            featured
+            id
+            name
+            url
+            technologies {
+              description
+              id
+              level
+              lft
+              name
+              rght
+              treeId
+              parent {
+                id
+              }
+              children {
+                id
+              }
+            }
+          }
+          listContact (primary: true) {
+            edges {
+              node {
+                website
+                phoneNumber
+                name
+                id
+                email
+              }
+            }
+          }
+            listHeadline {
+                content
+                id
+                order
+              }
+            listTechnology {
+                rght
+                treeId
+                name
+                level
+                lft
+                id
+                parent {
                     id
                     name
-                    url
-                    technologies {
+                }
+                children {
+                    id
+                    name
+                }
+            }
+              listMenu {
+                id
+                introduction
+                name
+                order
+                resource
+              }
+               listJobs {
+                    description
+                    endDate
+                    deliverables {
+                      description
+                      id
+                      name
+                      technologies {
                         description
                         id
                         level
@@ -27,97 +86,29 @@ export async function getStaticProps() {
                         rght
                         treeId
                         parent {
-                            id
+                          id
                         }
                         children {
-                            id
+                          id
                         }
-                    }
-                }
-                listContact (primary: true) {
-                    edges {
-                        node {
-                            website
-                            phoneNumber
-                            name
-                            id
-                            email
-                        }
-                    }
-                }
-                listHeadline {
-                    content
-                    id
-                    order
-                }
-                listTechnology {
-                    rght
-                    treeId
-                    name
-                    level
-                    lft
-                    id
-                    parent {
-                        id
-                        name
-                    }
-                    children {
-                        id
-                        name
-                    }
-                }
-                listMenu {
-                    id
-                    introduction
-                    name
-                    order
-                    resource
-                }
-                listJobs {
-                    description
-                    endDate
-                    deliverables {
-                        description
-                        id
-                        name
-                        technologies {
-                            description
-                            id
-                            level
-                            lft
-                            name
-                            rght
-                            treeId
-                            parent {
-                                id
-                            }
-                            children {
-                                id
-                            }
-                        }
+                      }
                     }
                     name
                     startDate
                     title
-                }
-            }
-            `,
-        });
-        data = result.data;
-        console.log('Data fetched successfully:', data); // Add this line
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        data = {};
-    }
+          }
+        }
+        `,
+    });
 
     return {
         props: {
-            contacts: data.listContact?.edges || [],
-            technologies: data.listTechnology || [],
-            headlines: data.listHeadline || [],
-            menu: data.listMenu || [],
-            jobs: data.listJobs || [],
-            projects: data.listProjects || [],
+            contacts: data.listContact.edges,
+            technologies: data.listTechnology,
+            headlines: data.listHeadline,
+            menu: data.listMenu,
+            jobs: data.listJobs,
+            projects: data.listProjects,
         },
         revalidate: 60,
     };
