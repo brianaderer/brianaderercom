@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache, HttpLink, NormalizedCacheObject } from '@a
 
 const createApolloClient = () => {
     return new ApolloClient({
-        uri: "http://127.0.0.1:8000/graphql",
+        uri: `${process.env.BACKEND_LOCATION}/graphql`,
         cache: new InMemoryCache(),
         connectToDevTools: true,
     });
