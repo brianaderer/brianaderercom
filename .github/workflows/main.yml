@@ -21,7 +21,7 @@ jobs:
       - name: Rsync All Files Except .env.local
         uses: burnett01/rsync-deployments@6.0.0
         with:
-          switches: -avzr --delete --exclude='.env'
+          switches: -avzr --delete --exclude='.env' --exclude='ecosystem.config.js'
           path: ./
           remote_path: ~/brianaderer/
           remote_host: 3.15.144.253
@@ -29,13 +29,16 @@ jobs:
           remote_user: brianaderer_ssh
           remote_key: ${{ secrets.SSH_KEY }}
 
-#      - name: Restart Application and Clear Cache
-#        uses: appleboy/ssh-action@master
-#        with:
-#          host: 3.15.144.253
-#          username: badererSudo
-#          key: ${{ secrets.STAGING_SSH }}
-#          script: |
-#            rm -rf /var/cache/nginx/*
-#            pm2 startOrReload ~/files/ecosystem.config.js --watch
+      - name: Restart
+        uses: appleboy/ssh-action@master
+        with:
+          host: 3.15.144.253
+          username: ${{ secrets.SUDO_USER }}
+          key: ${{ secrets.SUDO_SSH }}
+          port: 22
+          script: |
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -rf /var/cache/nginx/*
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S systemctl reload nginx
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S systemctl restart gunicorn
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S systemctl restart nginx
 
