@@ -6,7 +6,6 @@ import {HomeProps, Technology, StringArray, Headline} from '@/interfaces';
 
 export async function getStaticProps() {
     const client = createApolloClient();
-    console.log('Fetching data...');
     const { data } = await client.query({
         query: gql`
         query MyQuery {
@@ -101,7 +100,6 @@ export async function getStaticProps() {
         }
         `,
     });
-    console.log('Data fetched successfully:', data);
     return {
         props: {
             contacts: data.listContact.edges,
