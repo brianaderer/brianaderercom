@@ -1,8 +1,10 @@
 import { gql } from "@apollo/client";
 import createApolloClient from "../lib/apolloClient";
-import {useEffect, FC, useState, useRef} from "react";
-import { TypeOut, Badge, MenuLink, Job, Project } from '@/components';
+import {useEffect, FC, useState, useRef, useCallback} from "react";
+import { TypeOut, Badge, MenuLink, Job, Project, RotatingPlusMinus } from '@/components';
 import {HomeProps, Technology, StringArray, Headline} from '@/interfaces';
+import resolveConfig from 'tailwindcss/resolveConfig';
+import tailwindConfig from '../tailwind.config';
 
 export async function getStaticProps() {
     const client = createApolloClient();
@@ -121,6 +123,12 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs, pr
     const startProcess = useRef(true);
     const [headlinePrinted, setHeadlinePrinted] = useState(false);
     const [menuVisible, setMenuVisible] = useState(false);
+    const [breakpoint, setBreakpoint] = useState<string | false>(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [globalParsedScreens, setGlobalParsedScreens] = useState<{[key: string]: number}>({});
+    const [isOpen, setIsOpen] = useState(false);
+
+
     useEffect(() => {
         if( !headlinePrinted ){
             typeOutStrings.current = headlines.map((headline: Headline) => headline.content)
@@ -137,7 +145,50 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs, pr
         }
 
     }, [headlines, selectedSection, menu, headlinePrinted]);
-    console.log(projects);
+
+    useEffect(() => {
+        const fullConfig = resolveConfig(tailwindConfig);
+        const screens = fullConfig.theme.screens;
+        let parsedScreens = {};
+        for (const [key, value] of Object.entries(screens)) {
+            // @ts-ignore
+            parsedScreens[key] = parseInt(value.replace('px', ''), 10);
+        }
+        setGlobalParsedScreens(parsedScreens);
+        const handleResize = () => {
+            let largestBreakpoint: string | false = false;
+            const width = window.innerWidth;
+            for (const [key, value] of Object.entries(parsedScreens) as [string, number][]) {
+                if (width >= value) {
+                    largestBreakpoint = key;
+                } else {
+                    break;
+                }
+            }
+            setBreakpoint(largestBreakpoint);
+        };
+        handleResize(); // Set the initial value
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const compareBreakpoints = useCallback((checkBreakpoint: string | false) => {
+        if (breakpoint) {
+            for (const screen in globalParsedScreens) {
+                if (screen === checkBreakpoint) {
+                    return false;
+                }
+                if (screen === breakpoint) {
+                    return true;
+                }
+            }
+        } else {
+            return true;
+        }
+    }, [breakpoint, globalParsedScreens]);
+
+
+
     function flatListToHierarchical(flatList: Technology[]): Technology[] {
         const idMap: { [key: string]: Technology } = {};
         flatList.forEach(node => {
@@ -158,6 +209,10 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs, pr
 
         return rootNodes;
     }
+
+    useEffect(() => {
+        console.log(compareBreakpoints('lg'));
+    }, [breakpoint, compareBreakpoints]);
 
     function printHierarchicalList(node: Technology, indent = 0): JSX.Element {
         return (
@@ -180,18 +235,41 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs, pr
     }
     const loadAsset = (props: { target: string }) => {
         const {target} = props;
+        setIsOpen(false);
+        setMobileMenuOpen(false);
         setSelectedSection(target);
     };
+
+    const handleMenuToggle = (isOpen: boolean) => {
+        setMobileMenuOpen(!isOpen);
+        setIsOpen(!isOpen);
+    };
+
     return (
-        <div className={`p-8 pt-20 w-1/2 overflow-hidden min-h-[100vh]`}>
+        <div className={`p-8 pr-20 lg:pr:0 pt-20 w:5/6 lg:w-1/2 overflow-hidden min-h-[100vh] relative`}>
+            <div
+                style={{
+                    backgroundColor: 'rgba(var(--background-start-rgb), 0.9)',
+                }}
+                className={`h-[100vh] min-w-[100vw] w-full duration-300 z-10 absolute ${ mobileMenuOpen ? 'right-0' : 'right-full'}`}></div>
             <TypeOut setSiteVisible={setSiteVisible} startProcess={startProcess} finishedCallback={finishedCallback}
                      firstLineCallback={firstLineCallback} strings={typeOutStrings.current}/>
-            <div className={`fixed top-2 right-2 flex flex-col`}>
+            <div className={`z-20 fixed top-2 right-2 flex flex-col ${!mobileMenuOpen && compareBreakpoints('lg') ? 'translate-x-[103%]' : ''} transition-all duration-500`}>
+                {menuVisible && compareBreakpoints('lg') &&
+                    <div
+                    style = {{
+                        backgroundColor: 'rgba(var(--foreground-rgb), 0.2)',
+                    }}
+                    className="z-20 border-green-600 border-b-2 absolute w-12 h-full l-0 translate-x-[-100%]">
+                    <div className="opacity-100 absolute top-2 l-0 r-0">
+                        <RotatingPlusMinus isOpen={isOpen} handleMenuToggle={handleMenuToggle}/>
+                    </div>
+                </div>}
                 {contacts?.map((contact, index) => {
                     return <Badge key={index} contact={contact} visible={badgeVisible}/>
                 })}
                 <div
-                    className={`w-full flex flex-col gap-6 justify-center items-end p-8 text-lg ${menuVisible ? `opacity-1 h-auto` : `opacity-0 h-0`} border-b border-l border-green-600 mt-4`}>
+                    className={`bg-[rgb(var(--background-start-rgb))] w-full flex flex-col gap-6 justify-center items-end p-8 text-lg ${menuVisible ? `opacity-1 h-auto` : `opacity-0 h-0`} border-b border-l border-green-600 lg:mt-4`}>
                     {
                         menu.map((item, index) => {
                             return (

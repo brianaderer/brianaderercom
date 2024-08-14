@@ -6,3 +6,4 @@ export {TypeOut} from './TypeOut';
 export {Project} from './Project';
 export {Technology} from './Technology';
 export {MenuLink} from './MenuLink';
+export {RotatingPlusMinus} from './RotatingPlusMinus';
