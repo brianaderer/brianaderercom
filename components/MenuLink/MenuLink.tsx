@@ -8,7 +8,7 @@ interface MenuLinkProps extends ChildrenProps {
 const MenuLink: FC<MenuLinkProps>  = props => {
     const {href = false, children, onClick, className='', selectable = true} = props;
     return (
-        <a {...(href ? { href } : {})} target={'_blank'} className={`select-none border-transparent border-b-2 ${selectable && `cursor-pointer hover:border-white`} ${className}`} onClick={onClick}>
+        <a {...(href ? { href } : {})} className={`select-none ${selectable && `cursor-pointer`} ${className}`} onClick={onClick}>
             {children}
         </a>
     )

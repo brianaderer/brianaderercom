@@ -214,10 +214,17 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs, pr
         return rootNodes;
     }
 
+    const fontSizeLookup = [
+        'text-sm',
+        'text-md',
+        'text-lg',
+        'text-xl',
+    ];
+
     const printHierarchicalList = useCallback(
         function (node: Technology, indent = 0): JSX.Element {
             return (
-                <div key={node.id} style={{ marginLeft: indent * 20 }}>
+                <div className={`${indent === 0 ? 'mt-4' : ''}  ${ 3 - indent > - 1 ? fontSizeLookup[3-indent] : fontSizeLookup[0] }`} key={node.id} style={{ marginLeft: indent * 20 }}>
                     {node.name}
                     {node.children.map((child) => printHierarchicalList(child, indent + 1))}
                 </div>
@@ -240,6 +247,7 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs, pr
     }
     const loadAsset = (props: { target: string }) => {
         const {target} = props;
+        scrollToTop();
         setIsOpen(false);
         setMobileMenuOpen(false);
         setSelectedSection(target);
@@ -251,11 +259,19 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs, pr
     };
 
     useEffect(() => {
-            displayComponents.current['projects'] = projects.map((project, index) => {
+            displayComponents.current['projects'] = projects.reverse().map((project, index) => {
                 return <Project key={index} project={project}/>
             });
         },
         [projects]);
+
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
 
     useEffect(() => {
             displayComponents.current['cv'] = jobs.map((job, index) => {

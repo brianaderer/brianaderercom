@@ -7,10 +7,10 @@ const Deliverable: FC<{deliverable: DeliverableType}> = props => {
 
     return (
     <div className={`my-2 ml-8 flex flex-col gap-4`}>
-        <h2>{deliverable.name}</h2>
-        {deliverable.description && <p>{deliverable.description}</p>}
-        <div className="ml-8 my-2">
-            <p>Technologies Leveraged</p>
+        <h2 className={'text-xl'}>{deliverable.name}</h2>
+        {deliverable.description && <p className={'ml-8'}>{deliverable.description}</p>}
+        <div className="ml-12 my-2">
+            <p className={'text-lg'}>Technologies Leveraged</p>
             {
                 deliverable.technologies.map((technology, index) => {
                     return <Technology key={index} technology={technology} />
