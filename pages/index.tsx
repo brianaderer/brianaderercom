@@ -288,19 +288,18 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs, pr
         [printHierarchicalList, technologies]);
 
     return (
-        <>
-            <Head>
-                <title>Brian Aderer - React, Python, and PHP Developer</title>
-                <meta name="description" content="Brian Aderer is an experienced, full-stack, Senior React, Python, and PHP developer with a proven track-record of enterprise level deliverables."/>
-                <meta name="viewport" content="width=device-width, initial-scale=1"/>
-                <meta charSet="UTF-8"/>
-                <meta property="og:title" content="Brian Aderer - React, Python, and PHP Developer"/>
-                <meta property="og:description" content="Brian Aderer is an experienced, full-stack, Senior React, Python, and PHP developer with a proven track-record of enterprise level deliverables."/>
-                {/*<meta property="og:image" content="/path-to-your-image.jpg"/>*/}
-                <meta property="og:url" content="https://brianaderer.com"/>
-                {/*<meta name="twitter:card" content="summary_large_image"/>*/}
-            </Head>
             <main className={'p-8 pr-20 lg:pr:0 pt-20 w:5/6 lg:w-1/2 overflow-hidden min-h-[100vh] relative'}>
+                <Head>
+                    <title>Brian Aderer - React, Python, and PHP Developer</title>
+                    <meta name="description" content="Brian Aderer is an experienced, full-stack, Senior React, Python, and PHP developer with a proven track-record of enterprise level deliverables."/>
+                    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                    <meta charSet="UTF-8"/>
+                    <meta property="og:title" content="Brian Aderer - React, Python, and PHP Developer"/>
+                    <meta property="og:description" content="Brian Aderer is an experienced, full-stack, Senior React, Python, and PHP developer with a proven track-record of enterprise level deliverables."/>
+                    {/*<meta property="og:image" content="/path-to-your-image.jpg"/>*/}
+                    <meta property="og:url" content="https://brianaderer.com"/>
+                    {/*<meta name="twitter:card" content="summary_large_image"/>*/}
+                </Head>
                 <div className={`w-full`}>
                     <div
                         style={{
@@ -342,7 +341,6 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs, pr
                 </div>
             </div>
         </main>
-        </>
     );
 }
 
