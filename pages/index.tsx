@@ -6,7 +6,6 @@ import {HomeProps, Technology, StringArray, Headline} from '@/interfaces';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import tailwindConfig from '../tailwind.config';
 import Head from 'next/head';
-import {mapIncludes} from "yaml/dist/compose/util-map-includes";
 
 export async function getStaticProps() {
     const client = createApolloClient();
