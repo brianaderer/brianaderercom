@@ -10,12 +10,16 @@ const TypeOut: FC<{
         boolean
     },
     setSiteVisible: (value:boolean) => void,
+    setHeadlinePrinted: (value:boolean) => void;
+    setStartProcess: (value:boolean) => void;
 }> = ({
         strings,
         firstLineCallback,
         finishedCallback,
         startProcess,
         setSiteVisible,
+        setHeadlinePrinted,
+        setStartProcess,
     }) => {
     const [stringContent, setStringContent] = useState<string>("");
     const [forceCursorVisible, setForceCursorVisible] = useState(true);
@@ -31,12 +35,13 @@ const TypeOut: FC<{
     }, []);
 
     useEffect(() => {
+        console.log('use effect fired', {strings: strings, processRunning: processRunning, startProcess: startProcess.current})
         console.log('start process: ', startProcess);
         console.log('strings: ', strings);
 
-        if ( !startProcess.current || !strings.length || processRunning ) return; // Prevent re-running the typing process
+        if ( !startProcess || !strings.length || processRunning ) return; // Prevent re-running the typing process
         setProcessRunning(true);
-        startProcess.current = false;
+        setStartProcess(false);
         setSiteVisible(false);
         setCursorActive(true);
         let currentIndex = 0;
@@ -80,12 +85,13 @@ const TypeOut: FC<{
                     }, 1000);
                     finishedCallback();// Call finishedCallback when typing is done
                     setProcessRunning(false);
+                    setHeadlinePrinted(true);
                 }, 500);
             }
         };
 
         typeCharacter();
-    }, [strings, handleKeystroke, finishedCallback, firstLineCallback, startProcess, processRunning, setSiteVisible]);
+    }, [strings, handleKeystroke, finishedCallback, firstLineCallback, startProcess, processRunning, setSiteVisible, setHeadlinePrinted]);
 
     return (
         <div className="relative">

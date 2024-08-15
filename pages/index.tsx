@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import createApolloClient from "../lib/apolloClient";
-import {useEffect, FC, useState, useRef, useCallback} from "react";
+import React, {useEffect, FC, useState, useRef, useCallback} from "react";
 import { TypeOut, Badge, MenuLink, Job, Project, RotatingPlusMinus } from '@/components';
 import {HomeProps, Technology, StringArray, Headline} from '@/interfaces';
 import resolveConfig from 'tailwindcss/resolveConfig';
@@ -115,33 +115,41 @@ export async function getStaticProps() {
     };
 }
 
+type DisplayComponentsType = {
+    [key: string]: React.ReactElement[];
+};
+
 const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs, projects }) => {
     const [badgeVisible, setBadgeVisible] = useState(false);
     const [siteVisible, setSiteVisible] = useState(false);
     const [selectedSection, setSelectedSection] = useState('');
     const  typeOutStrings = useRef<string[]>([]);
-    const startProcess = useRef(true);
+    const [startProcess, setStartProcess] = useState(true);
     const [headlinePrinted, setHeadlinePrinted] = useState(false);
     const [menuVisible, setMenuVisible] = useState(false);
     const [breakpoint, setBreakpoint] = useState<string | false>(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [globalParsedScreens, setGlobalParsedScreens] = useState<{[key: string]: number}>({});
     const [isOpen, setIsOpen] = useState(false);
-
+    const displayComponents = useRef<DisplayComponentsType>({});
 
     useEffect(() => {
+        console.log('headline printed ', headlinePrinted)
         if( !headlinePrinted ){
             typeOutStrings.current = headlines.map((headline: Headline) => headline.content)
-            setHeadlinePrinted(true);
+            setSiteVisible(false);
         } else {
             const selectedMenuItem = menu.find(item => item.resource === selectedSection)
             const introduction = (selectedMenuItem?.introduction);
-            if(introduction){
-                typeOutStrings.current=[];
-                setSiteVisible(false);
+            if(introduction?.length){
+                console.log('we have liftoff');
                 typeOutStrings.current=[introduction];
-                startProcess.current = true;
+                setStartProcess(true);
             }
+            // if(introduction){
+            //     typeOutStrings.current=[introduction];
+            //     startProcess.current = true;
+            // }
         }
 
     }, [headlines, selectedSection, menu, headlinePrinted]);
@@ -214,17 +222,22 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs, pr
         console.log(compareBreakpoints('lg'));
     }, [breakpoint, compareBreakpoints]);
 
-    function printHierarchicalList(node: Technology, indent = 0): JSX.Element {
-        return (
-            <div key={node.id} style={{marginLeft: indent * 20}}>
-                {node.name}
-                {node.children.map(child => printHierarchicalList(child, indent + 1))}
-            </div>
-        );
-    }
+    const printHierarchicalList = useCallback(
+        function (node: Technology, indent = 0): JSX.Element {
+            return (
+                <div key={node.id} style={{ marginLeft: indent * 20 }}>
+                    {node.name}
+                    {node.children.map((child) => printHierarchicalList(child, indent + 1))}
+                </div>
+            );
+        },
+        [] // Add dependencies here if necessary
+    );
 
     const finishedCallback = () => {
-        setSiteVisible(true);
+        if( headlinePrinted ){
+            setSiteVisible(true);
+        }
         if( !menuVisible ){
             setMenuVisible(true);
         }
@@ -235,6 +248,7 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs, pr
     }
     const loadAsset = (props: { target: string }) => {
         const {target} = props;
+        setSiteVisible(false);
         setIsOpen(false);
         setMobileMenuOpen(false);
         setSelectedSection(target);
@@ -245,6 +259,25 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs, pr
         setIsOpen(!isOpen);
     };
 
+    useEffect(() => {
+            displayComponents.current['projects'] = projects.map((project, index) => {
+                return <Project key={index} project={project}/>
+            });
+        },
+        [projects]);
+
+    useEffect(() => {
+            displayComponents.current['cv'] = jobs.map((job, index) => {
+                return <Job key={index} job={job}/>
+            });
+        },
+        [jobs]);
+
+    useEffect(() => {
+            displayComponents.current['skillsAndTech'] = flatListToHierarchical(technologies).map(node => printHierarchicalList(node));
+        },
+        [printHierarchicalList, technologies]);
+
     return (
         <div className={`p-8 pr-20 lg:pr:0 pt-20 w:5/6 lg:w-1/2 overflow-hidden min-h-[100vh] relative`}>
             <div
@@ -252,7 +285,7 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs, pr
                     backgroundColor: 'rgba(var(--background-start-rgb), 0.9)',
                 }}
                 className={`h-[100vh] min-w-[100vw] w-full duration-300 z-10 absolute ${ mobileMenuOpen ? 'right-0' : 'right-full'}`}></div>
-            <TypeOut setSiteVisible={setSiteVisible} startProcess={startProcess} finishedCallback={finishedCallback}
+            <TypeOut setStartProcess={setStartProcess} setHeadlinePrinted={setHeadlinePrinted} setSiteVisible={setSiteVisible} startProcess={startProcess} finishedCallback={finishedCallback}
                      firstLineCallback={firstLineCallback} strings={typeOutStrings.current}/>
             <div className={`z-20 fixed top-2 right-2 flex flex-col ${!mobileMenuOpen && compareBreakpoints('lg') ? 'translate-x-[103%]' : ''} transition-all duration-500`}>
                 {menuVisible && compareBreakpoints('lg') &&
@@ -281,20 +314,8 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs, pr
                 </div>
             </div>
             <div
-                className={`${siteVisible && selectedSection === 'skillsAndTech' ? `opacity-1` : `opacity-0 h-0`} mt-10 transition-all`}>
-                {flatListToHierarchical(technologies).map(node => printHierarchicalList(node))}
-            </div>
-            <div
-                className={`${siteVisible && selectedSection === 'cv' ? `opacity-1` : `opacity-0 h-0`} mt-10 transition-all`}>
-                {jobs.map((job, index) => {
-                    return <Job key={index} job={job} />
-                })}
-            </div>
-            <div
-                className={`${siteVisible && selectedSection === 'projects' ? `opacity-1` : `opacity-0 h-0`} mt-10 transition-all flex flex-col gap-4`}>
-                {projects.map((project, index) => {
-                    return <Project key={index} project={project} />
-                })}
+                className={`${siteVisible ? `opacity-1` : `opacity-0`} mt-10 transition-all`}>
+                {displayComponents.current[selectedSection]}
             </div>
         </div>
     );
