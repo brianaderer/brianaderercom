@@ -142,14 +142,10 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs, pr
             const selectedMenuItem = menu.find(item => item.resource === selectedSection)
             const introduction = (selectedMenuItem?.introduction);
             if(introduction?.length){
-                console.log('we have liftoff');
+                setSiteVisible(false);
                 typeOutStrings.current=[introduction];
                 setStartProcess(true);
             }
-            // if(introduction){
-            //     typeOutStrings.current=[introduction];
-            //     startProcess.current = true;
-            // }
         }
 
     }, [headlines, selectedSection, menu, headlinePrinted]);
@@ -218,10 +214,6 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs, pr
         return rootNodes;
     }
 
-    useEffect(() => {
-        console.log(compareBreakpoints('lg'));
-    }, [breakpoint, compareBreakpoints]);
-
     const printHierarchicalList = useCallback(
         function (node: Technology, indent = 0): JSX.Element {
             return (
@@ -248,7 +240,6 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs, pr
     }
     const loadAsset = (props: { target: string }) => {
         const {target} = props;
-        setSiteVisible(false);
         setIsOpen(false);
         setMobileMenuOpen(false);
         setSelectedSection(target);

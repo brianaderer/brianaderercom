@@ -6,9 +6,7 @@ const TypeOut: FC<{
     strings: StringArray,
     firstLineCallback: () => void,
     finishedCallback: () => void,
-    startProcess: {current:
-        boolean
-    },
+    startProcess: boolean,
     setSiteVisible: (value:boolean) => void,
     setHeadlinePrinted: (value:boolean) => void;
     setStartProcess: (value:boolean) => void;
@@ -57,10 +55,10 @@ const TypeOut: FC<{
                     handleKeystroke();
                     const delay =
                         currentString[currentIndex] === "." || currentString[currentIndex] === "!" || currentString[currentIndex] === "?"
-                            ? 1000
+                            ? 750
                             : currentString[currentIndex] === ","
-                                ? 250
-                                : 20;
+                                ? 200
+                                : 15;
                     currentIndex++;
                     setTimeout(typeCharacter, delay);
                 } else {
@@ -82,11 +80,11 @@ const TypeOut: FC<{
                 setTimeout(function(){
                     setTimeout(function(){
                         setCursorActive(false);
-                    }, 1000);
+                    }, 750);
                     finishedCallback();// Call finishedCallback when typing is done
                     setProcessRunning(false);
                     setHeadlinePrinted(true);
-                }, 500);
+                }, 300);
             }
         };
 
