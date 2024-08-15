@@ -33,10 +33,6 @@ const TypeOut: FC<{
     }, []);
 
     useEffect(() => {
-        console.log('use effect fired', {strings: strings, processRunning: processRunning, startProcess: startProcess.current})
-        console.log('start process: ', startProcess);
-        console.log('strings: ', strings);
-
         if ( !startProcess || !strings.length || processRunning ) return; // Prevent re-running the typing process
         setProcessRunning(true);
         setStartProcess(false);
