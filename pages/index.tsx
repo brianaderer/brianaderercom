@@ -304,7 +304,7 @@ const Home: FC<HomeProps> = ({ contacts, technologies, headlines, menu, jobs, pr
                         style={{
                             backgroundColor: 'rgba(var(--background-start-rgb), 0.9)',
                         }}
-                        className={`h-[100vh] min-w-[100vw] w-full duration-300 z-10 absolute ${mobileMenuOpen ? 'right-0' : 'right-full'}`}></div>
+                        className={`min-h-[100vh] min-w-[100vw] h-full w-full duration-300 z-10 absolute ${mobileMenuOpen ? 'right-0' : 'right-full'}`}></div>
                     <TypeOut setStartProcess={setStartProcess} setHeadlinePrinted={setHeadlinePrinted}
                              setSiteVisible={setSiteVisible} startProcess={startProcess} finishedCallback={finishedCallback}
                          firstLineCallback={firstLineCallback} strings={typeOutStrings.current}/>

@@ -8,12 +8,12 @@ const Job: FC<{ job: JobType, className?: string }> = props => {
         <div className={`mb-8 flex flex-col gap-4 ${className}`}>
             <h1 className={'text-2xl'}>{job.name}</h1>
             <p className={'text-xl'}>{job.title}</p>
-            <div className="flex flex-row align-center">
+            <div className="flex flex-col lg:flex-row align-center">
                 <p className={'text-lg'}>Start Date: {job.startDate} / </p>
-                <p className={'text-lg'}>End Date: {job.endDate ? job.endDate : 'Current'}</p>
+                <p className={'text-lg lg:ml-2'}>End Date: {job.endDate ? job.endDate : 'Current'}</p>
             </div>
             <p className={'text-md'}>{job.description}</p>
-            <div className={`flex flex-col ml-4 gap-4`}>
+            <div className={`flex flex-col lg:ml-4 gap-4`}>
                 <h3 className={'text-xl'}>Key Deliverables</h3>
             {
                 job.deliverables.map((deliverable, index) => {

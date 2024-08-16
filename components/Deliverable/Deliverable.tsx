@@ -6,11 +6,11 @@ const Deliverable: FC<{deliverable: DeliverableType}> = props => {
     const {deliverable} = props;
 
     return (
-    <div className={`my-2 ml-8 flex flex-col gap-4`}>
+    <div className={`my-2 ml-2 lg:ml-8 flex flex-col gap-4`}>
         <h2 className={'text-xl'}>{deliverable.name}</h2>
-        {deliverable.description && <p className={'ml-8'}>{deliverable.description}</p>}
+        {deliverable.description && <p className={'ml-2 lg:ml-8'}>{deliverable.description}</p>}
         <div className="ml-12 my-2">
-            <p className={'text-lg'}>Technologies Leveraged</p>
+            <p className={'text-md md:text-lg'}>Technologies Leveraged</p>
             {
                 deliverable.technologies.map((technology, index) => {
                     return <Technology key={index} technology={technology} />
