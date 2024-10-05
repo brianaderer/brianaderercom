@@ -17,6 +17,7 @@ jobs:
         run: |
           npm install
           npm run build
+#          repush main
 
       - name: Rsync All Files Except .env.local
         uses: burnett01/rsync-deployments@6.0.0

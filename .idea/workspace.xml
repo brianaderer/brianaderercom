@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b3ed194-ba40-4fee-95f9-c43f41625b26" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/main.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/main.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Deliverable/Deliverable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Deliverable/Deliverable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Job/Job.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Job/Job.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +94,8 @@
       <workItem from="1723608333025" duration="1315000" />
       <workItem from="1723609687295" duration="3551000" />
       <workItem from="1723642711498" duration="26425000" />
-      <workItem from="1723843463745" duration="1104000" />
+      <workItem from="1723843463745" duration="2884000" />
+      <workItem from="1728087077384" duration="19000" />
     </task>
     <servers />
   </component>
